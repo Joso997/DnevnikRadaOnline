@@ -82,7 +82,7 @@
                         .post('/api/mjesta/store', this.input)
                         .then(response => {
                             if (this.datumi.length == 0) {
-                                this.$router.push({name: 'home'})
+                                this.$router.push({name: 'mjesta'})
                             } else {
                                 this.addDetails(response.data.last_insert_id);
                             }
@@ -96,7 +96,7 @@
                             console.log(response.data.last_insert_id);
                             this.editDetails(response.data.last_insert_id);
                         })
-                        .catch(error => console.log(error))
+                        .catch(error => { console.log(error);})
                         .finally(() => this.loading = false)
                 }
             },
@@ -105,7 +105,7 @@
                 this.axios
                     .post('/api/kalendar/store', details)
                     .then(response => {
-                        this.$router.push({name: 'home'});
+                        this.$router.push({name: 'mjesta'});
                         console.log(response.data);
                     })
                     .catch(error => console.log(error))
@@ -116,7 +116,7 @@
                 this.axios
                     .post(`/api/kalendar/store/`, details)
                     .then(response => {
-                        this.$router.push({name: 'home'});
+                        this.$router.push({name: 'mjesta'});
                         console.log(response.data);
                     })
                     .catch(error => console.log(error))

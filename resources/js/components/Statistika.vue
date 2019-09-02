@@ -14,7 +14,7 @@
                                 :axis-min="0"
                                 :axis-max="50"
                                 :axis-full-mode="true"
-                                :labels="[ '1Q', '2Q', '3Q', '4Q', '1Q', '2Q', '3Q', '4Q' ]"
+                                :labels="[ '1M', '2M', '3M', '4M', '5M', '6M', '7M', '8M' ]"
                                 :names="grafovi.prvi.names"
                                 :values="grafovi.prvi.values">
                             <note :text="'Line Chart'"></note>

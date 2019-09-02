@@ -28,23 +28,33 @@
                 </td>
             </tr>
             <tr >
-                <table style="all: unset;" v-show="poveznice.length > 0 && poveznice[0].Id_Evidencija == evidencija.id" :id="'DetailsCollapse'+evidencija.id" :ref="'DetailsCollapse'+evidencija.id" class=" collapse table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>Sifra</th>
-                        <th>Naziv Materijala</th>
-                        <th>Kolicina</th>
-                    </tr>
-                    </thead>
-                    <tbody v-if="poveznice.length > 0 && poveznice[0].Id_Evidencija == evidencija.id">
-                        <tr v-for="poveznica in poveznice" :key="poveznice.id">
-                            <td>{{ poveznica.Sifra }}</td>
-                            <td>{{ poveznica.Skladiste.NazivMaterijala }}</td>
-                            <td>{{ poveznica.Kolicina }}</td>
-                        </tr>
-                    </tbody>
-                </table>
             </tr>
+            <div class="modal fade" :id="'DetailsCollapse'+evidencija.id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Termini</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" v-if="poveznice.length > 0 && poveznice[0].Id_Evidencija == evidencija.id">
+                            <div v-for="poveznica in poveznice" :key="poveznice.id">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title"><b>Naziv:</b> {{ poveznica.Skladiste.NazivMaterijala }}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">Šifra: {{ poveznica.Sifra }}</h6>
+                                    <p class="card-text">Količina: {{ poveznica.Kolicina }}</p>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             </tbody>
         </table>
     </div>
@@ -87,7 +97,8 @@
                     .get(`/api/poveznica/master_all/${id}`)
                     .then(response => {
                         this.poveznice = response.data;
-                        this.$refs["DetailsCollapse"+id][0]["attributes"][2].value = "collapse table table-bordered show";
+                        $('#DetailsCollapse'+id).modal('toggle');
+                        //this.$refs["DetailsCollapse"+id][0]["attributes"][2].value = "collapse table table-bordered show";
                     });
             }
         },

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3 class="text-center">All Books</h3><br/>
+        <h3 class="text-center">Sva Mjesta</h3><br/>
 
         <table class="table table-bordered">
             <thead>
@@ -25,22 +25,29 @@
                     </div>
                 </td>
             </tr>
-            <tr >
-                <table style="all: unset;" v-show="datumi.length > 0 && datumi[0].Id_Mjesta == mjesto.id" :id="'DetailsCollapse'+mjesto.id" :ref="'DetailsCollapse'+mjesto.id" class=" collapse table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>Termin</th>
-                    </tr>
-                    </thead>
-                    <tbody v-if="datumi.length > 0 && datumi[0].Id_Mjesta == mjesto.id">
-                    <tr v-for="datum in datumi" :key="datumi.id">
-                        <td>{{ datum.Datum }}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </tr>
+            <div class="modal fade" :id="'DetailsCollapse'+mjesto.id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Termini</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" v-if="datumi.length > 0 && datumi[0].Id_Mjesta == mjesto.id">
+                            <ul class="list-group" v-for="datum in datumi" :key="datumi.id">
+                                <li class="list-group-item"><b>Datum:</b> {{ datum.Datum }}</li>
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             </tbody>
         </table>
+
     </div>
 </template>
 
@@ -70,24 +77,15 @@
                 })
             },
             switchDetails(id){
-                if(this.datumi.length != 0){
-                    if(this.datumi[0].Id_Mjesta == id){
-                        this.datumi = [];
-                    }else{
-                        this.getDatumi(id)
-                    }
-                }else{
-                    this.getDatumi(id)
-                }
+                this.getDatumi(id)
             },
             getDatumi(id){
-                this.datumi = [];
                 this.axios
                     .get(`/api/kalendar/master_all/${id}`)
                     .then(response => {
                         console.log(response.data);
                         this.datumi = response.data;
-                        this.$refs["DetailsCollapse"+id][0]["attributes"][2].value = "collapse table table-bordered show";
+                        $('#DetailsCollapse'+id).modal('toggle');
                     });
 
             }

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3 class="text-center">Add Book</h3>
+        <h3 class="text-center">Dodaj Evidenciju</h3>
         <div class="row">
             <div class="col-md-6">
                 <form @submit.prevent="addItem">

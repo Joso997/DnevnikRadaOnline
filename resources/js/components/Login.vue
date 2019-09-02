@@ -1,21 +1,52 @@
 <template>
     <div class="login-form">
-        <h2 class="login-heading">Login</h2>
+        <div class="cotainer">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">Login</div>
+                        <div class="card-body">
         <form action="#" @submit.prevent="login">
-            <div class="form-control">
-                <label for="email">Username/Email</label>
-                <input type="email" name="username" id="username" class="login-input" v-model="input.username">
+
+            <div class="form-group row">
+                <label for="email_address" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
+                <div class="col-md-6">
+                    <input placeholder="primjer@primjer.com" type="email" id="email_address" class="form-control" name="email-address" required autofocus v-model="input.username">
+                </div>
             </div>
 
-            <div class="form-control mb-more">
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password" class="login-input" v-model="input.password">
+            <div class="form-group row">
+                <label for="password1" class="col-md-4 col-form-label text-md-right">Password</label>
+                <div class="col-md-6">
+                    <input placeholder="Minimalno 8 znakova" type="password" pattern=".{8,}" id="password1" class="form-control" name="password" required v-model="input.password">
+                </div>
             </div>
 
-            <div class="form-control">
-                <button type="submit" class="btn-submit">Login</button>
+            <div class="form-group row">
+                <!--div class="col-md-6 offset-md-4">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="remember"> Remember Me
+                        </label>
+                    </div>
+                </div>
+            </div-->
+
+                <div class="col-md-6 offset-md-4">
+                    <button type="submit" class="btn btn-primary">
+                        Login
+                    </button>
+                    <!--a href="#" class="btn btn-link">
+                        Forgot Your Password?
+                    </a-->
+                </div>
             </div>
         </form>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
     </div>
 </template>
 
@@ -28,11 +59,9 @@
             }
         },
         created() {
-            this.axios
-                .get('/api/skladistes')
-                .then(response => {
-                    this.skladiste = response.data;
-                });
+            if(this.$cookie.get('loginToken') != null){
+                this.$router.push({name: 'home'});
+            }
         },
         methods:{
             login(){
@@ -42,9 +71,20 @@
                         this.$parent.$emit('ChangeView', 'someValue');
                         this.$cookie.set('loginToken',response.data['access_token']);
                         this.$router.push({name: 'home'});
-
+                        Vue.$toast.open({
+                            message: 'Prijava je Uspješno Izvršena',
+                            type: 'success',
+                            position: 'top'
+                        });
                     })
-                    .catch(error => console.log(error))
+                    .catch(error => {
+                        console.log(error);
+                        Vue.$toast.open({
+                            message: 'Identifikacijski Podaci su Netočni',
+                            type: 'error',
+                            position: 'top'
+                        });
+                    })
                     .finally(() => this.loading = false)
             }
         }

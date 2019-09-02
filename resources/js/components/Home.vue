@@ -50,6 +50,13 @@
                 </div>
             </div>
         </div>
+        <footer class="page-footer font-small blue">
+
+            <!-- Copyright -->
+            <div class="footer-copyright text-center py-3"><p class="text-secondary">Ulogirani Korisnik:</p> <p class="text-info font-weight-bold">{{CurrentUser}}</p></div>
+            <!-- Copyright -->
+
+        </footer>
     </div>
 
 
@@ -65,6 +72,7 @@
         },
         data() {
             return {
+                CurrentUser: {},
                 kalendar: [],
                 termini: [],
                 obavijesti: [],
@@ -80,6 +88,7 @@
         created() {
             this.axios.defaults.headers.common['Authorization'] = "Bearer " + this.$cookie.get('loginToken');
             this.getDatumi(new Date().toDateString());
+            this.getUser();
         },
         methods:{
             getDatumi(datum){
@@ -99,6 +108,13 @@
                         Datum: Datum
                     }
                 })
+            },
+            getUser(){
+                this.axios
+                    .get('/api/user')
+                    .then(response => {
+                        this.CurrentUser =  response.data.name;
+                    });
             }
         }
     }
