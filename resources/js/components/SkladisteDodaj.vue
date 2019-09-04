@@ -6,27 +6,27 @@
                 <form @submit.prevent="addItem">
                     <div class="form-group">
                         <label>Sifra</label>
-                        <input type="text" class="form-control" v-model="input.Sifra">
+                        <input type="number" class="form-control" v-model="input.Sifra" required>
                     </div>
                     <div class="form-group">
                         <label>Naziv Materijala</label>
-                        <input type="text" class="form-control" v-model="input.NazivMaterijala">
+                        <input type="text" class="form-control" v-model="input.NazivMaterijala" required>
                     </div>
                     <div class="form-group">
                         <label>Prodavac</label>
-                        <input type="text" class="form-control" v-model="input.Prodavac">
+                        <input type="text" class="form-control" v-model="input.Prodavac" required>
                     </div>
                     <div class="form-group">
                         <label>Kolicina</label>
-                        <input type="text" class="form-control" v-model="input.Kolicina">
+                        <input type="number" class="form-control" v-model="input.Kolicina" required>
                     </div>
                     <div class="form-group">
                         <label>Mjerna Jedinica</label>
-                        <input type="text" class="form-control" v-model="input.MjernaJedinica">
+                        <input type="text" class="form-control" v-model="input.MjernaJedinica" required>
                     </div>
                     <div class="form-group">
                         <label>Cijena</label>
-                        <input type="text" class="form-control" v-model="input.Cijena">
+                        <input type="number" step="0.01" class="form-control" v-model="input.Cijena" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Add Book</button>
                 </form>

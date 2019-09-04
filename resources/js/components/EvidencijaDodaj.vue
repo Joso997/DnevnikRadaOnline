@@ -6,12 +6,12 @@
                 <form @submit.prevent="addItem">
                     <div class="form-group">
                         <label>Sifra</label>
-                        <input type="text" class="form-control" v-model="input.Sifra">
+                        <input type="number"  class="form-control" v-model="input.Sifra" required>
                     </div>
                     <div class="form-group">
                         <label>Mjesto Rada</label>
-                        <select  class="custom-select" v-model="input.Id_Mjesta">
-                            <option v-if="Id_Mjesta == null" :value="input.Id_Mjesta" v-once selected>Odaberi...</option>
+                        <select  class="custom-select" v-model="input.Id_Mjesta" required>
+                            <option v-if="Id_Mjesta == null" :value="input.Id_Mjesta" v-once selected >Odaberi...</option>
                             <option v-for="mjesto in mjesta" :key="mjesto.id" :value="mjesto.id">
                                 {{ mjesto.NazivMjesta }}
                             </option>
@@ -23,11 +23,11 @@
                     </div>
                     <div class="form-group">
                         <label>Utroseno Vrijeme</label>
-                        <input type="text" class="form-control" v-model="input.UtrosenoVrijeme">
+                        <input type="number" class="form-control" v-model="input.UtrosenoVrijeme" required>
                     </div>
                     <div class="form-group">
                         <label>Opis Posla</label>
-                        <input type="text" class="form-control" v-model="input.OpisPosla">
+                        <input type="text" class="form-control" v-model="input.OpisPosla" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Add Book</button>
                 </form>

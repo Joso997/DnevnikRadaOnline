@@ -80927,7 +80927,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text" },
+                attrs: { type: "number", required: "" },
                 domProps: { value: _vm.input.Sifra },
                 on: {
                   input: function($event) {
@@ -80955,6 +80955,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "custom-select",
+                  attrs: { required: "" },
                   on: {
                     change: function($event) {
                       var $$selectedVal = Array.prototype.filter
@@ -81033,7 +81034,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text" },
+                attrs: { type: "number", required: "" },
                 domProps: { value: _vm.input.UtrosenoVrijeme },
                 on: {
                   input: function($event) {
@@ -81059,7 +81060,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text" },
+                attrs: { type: "text", required: "" },
                 domProps: { value: _vm.input.OpisPosla },
                 on: {
                   input: function($event) {
@@ -82072,7 +82073,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text" },
+                attrs: { type: "text", required: "" },
                 domProps: { value: _vm.input.NazivMjesta },
                 on: {
                   input: function($event) {
@@ -82098,7 +82099,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text" },
+                attrs: { type: "text", required: "" },
                 domProps: { value: _vm.input.Adresa },
                 on: {
                   input: function($event) {
@@ -82560,7 +82561,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text" },
+                attrs: { type: "number", required: "" },
                 domProps: { value: _vm.input.Sifra },
                 on: {
                   input: function($event) {
@@ -82586,7 +82587,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text" },
+                attrs: { type: "text", required: "" },
                 domProps: { value: _vm.input.NazivMaterijala },
                 on: {
                   input: function($event) {
@@ -82612,7 +82613,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text" },
+                attrs: { type: "text", required: "" },
                 domProps: { value: _vm.input.Prodavac },
                 on: {
                   input: function($event) {
@@ -82638,7 +82639,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text" },
+                attrs: { type: "number", required: "" },
                 domProps: { value: _vm.input.Kolicina },
                 on: {
                   input: function($event) {
@@ -82664,7 +82665,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text" },
+                attrs: { type: "text", required: "" },
                 domProps: { value: _vm.input.MjernaJedinica },
                 on: {
                   input: function($event) {
@@ -82690,7 +82691,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text" },
+                attrs: { type: "number", step: "0.01", required: "" },
                 domProps: { value: _vm.input.Cijena },
                 on: {
                   input: function($event) {

@@ -6,11 +6,11 @@
                 <form @submit.prevent="addItem">
                     <div class="form-group">
                         <label>Naziv Mjesta</label>
-                        <input type="text" class="form-control" v-model="input.NazivMjesta">
+                        <input type="text" class="form-control" v-model="input.NazivMjesta" required>
                     </div>
                     <div class="form-group">
                         <label>Adresa</label>
-                        <input type="text" class="form-control" v-model="input.Adresa">
+                        <input type="text" class="form-control" v-model="input.Adresa" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Add Book</button>
                 </form>
