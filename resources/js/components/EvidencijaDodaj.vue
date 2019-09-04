@@ -115,12 +115,19 @@
         methods: {
             addItem() {
                 console.log(this.input.Datum);
+                if (this.materijali.length == 0) {
+                    this.input.hasDetails = false;
+                }else{
+                    this.input.hasDetails = true;
+                }
                 this.axios
                     .post('/api/evidencija/store', this.input)
                     .then(response => {
                         if (this.materijali.length == 0) {
-                            this.$router.push({name: 'home'});
+                            this.input.hasDetails = false;
+                            this.$router.push({name: 'evidencija'});
                         } else {
+                            this.input.hasDetails = true;
                             this.addDetails(response.data.last_insert_id);
                         }
                         console.log(response.data);
@@ -133,7 +140,7 @@
                 this.axios
                     .post('/api/poveznica/store', details)
                     .then(response => {
-                        this.$router.push({name: 'home'});
+                        this.$router.push({name: 'evidencija'});
                         console.log(response.data);
                     })
                     .catch(error => console.log(error))

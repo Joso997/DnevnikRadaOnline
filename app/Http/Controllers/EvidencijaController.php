@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Evidencija;
 use App\Kalendar;
 use App\Mjesta;
+use App\Poveznica;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EvidencijaController extends Controller
 {
@@ -26,6 +28,7 @@ class EvidencijaController extends Controller
                 "Datum" => $item['Datum'],
                 "OpisPosla" => $item['OpisPosla'],
                 "UtrosenoVrijeme" => $item['UtrosenoVrijeme'],
+                "hasDetails" => $item['hasDetails'],
                 "NazivMjesta" => Mjesta::select('NazivMjesta')->where('id', $item['Id_Mjesta'])->first()["NazivMjesta"]
             ));
         }
@@ -59,6 +62,16 @@ class EvidencijaController extends Controller
         return response()->json($test);
     }
 
+    public function stanje()
+    {
+        $stanje = array('sati' => 0, 'vrij' => 0, 'broj' => 0);
+        $stanje['sati'] = Evidencija::where('user_id', auth()->user()->id)->sum('UtrosenoVrijeme');
+        $stanje['vrij'] = Poveznica::where('user_id', auth()->user()->id)->sum(DB::raw('Kolicina * Cijena'));
+        $stanje['broj'] = Evidencija::where('user_id', auth()->user()->id)->count();
+
+        return response()->json($stanje);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -74,6 +87,7 @@ class EvidencijaController extends Controller
             'Datum' => $date,
             'OpisPosla' => $request->input('OpisPosla'),
             'UtrosenoVrijeme' => $request->input('UtrosenoVrijeme'),
+            'hasDetails' => $request->input('hasDetails'),
             'user_id' => auth()->user()->id
         ]);
         $record->save();

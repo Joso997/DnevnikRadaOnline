@@ -20,6 +20,7 @@ Route::middleware('auth:api')->group(function(){
     Route::group(['prefix' => 'evidencija'], function () {
         Route::post('store', 'EvidencijaController@store');
         Route::get('statistika', 'EvidencijaController@statistika');
+        Route::get('stanje', 'EvidencijaController@stanje');
         Route::get('edit/{id}', 'EvidencijaController@edit');
         Route::post('update/{id}', 'EvidencijaController@update');
         Route::delete('destroy/{id}', 'EvidencijaController@destroy');

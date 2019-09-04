@@ -4,7 +4,27 @@
             <div class="col-md-8">
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
-                        Stanje Poduzeća
+                        <h2><b>Stanje Poduzaća</b> </h2>
+                        <div class="row">
+                            <div class="card col-md-12">
+                                <div class="card-body">
+                                    <h5 class="card-title"><b>Radni Sati:</b> </h5>
+                                    {{stanje.sati}}
+                                </div>
+                            </div>
+                            <div class="card col-md-12">
+                                <div class="card-body">
+                                    <h5 class="card-title"><b>Ukupna Vrijednost Materijala:</b> </h5>
+                                    {{stanje.vrij}}
+                                </div>
+                            </div>
+                            <div class="card col-md-12">
+                                <div class="card-body">
+                                    <h5 class="card-title"><b>Broj Evidencija:</b> </h5>
+                                    {{stanje.broj}}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
                         <graph-line
@@ -63,6 +83,11 @@
         name: "Statistika",
         data(){
             return{
+                stanje:{
+                  sati: 0,
+                  vrij: 0,
+                  broj: 0
+                },
                 grafovi: {
                     prvi: {
                         names: [],
@@ -96,11 +121,16 @@
                     }
                     console.log(this.grafovi.prvi);
                 });
-            this.axios
+            /*this.axios
                 .get(`/api/evidencija/statistika`)
                 .then(response => {
                     console.log(response.data);
                     this.grafovi.drugi = response.data;
+                });*/
+            this.axios
+                .get(`/api/evidencija/stanje`)
+                .then(response => {
+                   this.stanje = response.data;
                 });
         }
     }

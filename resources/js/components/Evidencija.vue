@@ -21,7 +21,7 @@
                 <td>{{ evidencija.UtrosenoVrijeme }}</td>
                 <td>
                     <div class="btn-group" role="group">
-                        <button @click="switchDetails(evidencija.id)" class="btn btn-secondary" type="button" aria-expanded="false"  >
+                        <button v-if="evidencija.hasDetails == 1" @click="switchDetails(evidencija.id)" class="btn btn-secondary" type="button" aria-expanded="false"  >
                             Materijali
                         </button>
                     </div>

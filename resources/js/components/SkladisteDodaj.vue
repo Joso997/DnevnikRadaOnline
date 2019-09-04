@@ -59,7 +59,7 @@
                     this.axios
                         .post('/api/skladiste/store', this.input)
                         .then(response => (
-                            this.$router.push({name: 'home'})
+                            this.$router.push({name: 'skladiste'})
 
                         ))
                         .catch(error => console.log(error))

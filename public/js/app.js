@@ -2160,12 +2160,23 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       console.log(this.input.Datum);
+
+      if (this.materijali.length == 0) {
+        this.input.hasDetails = false;
+      } else {
+        this.input.hasDetails = true;
+      }
+
       this.axios.post('/api/evidencija/store', this.input).then(function (response) {
         if (_this2.materijali.length == 0) {
+          _this2.input.hasDetails = false;
+
           _this2.$router.push({
-            name: 'home'
+            name: 'evidencija'
           });
         } else {
+          _this2.input.hasDetails = true;
+
           _this2.addDetails(response.data.last_insert_id);
         }
 
@@ -2185,7 +2196,7 @@ __webpack_require__.r(__webpack_exports__);
       };
       this.axios.post('/api/poveznica/store', details).then(function (response) {
         _this3.$router.push({
-          name: 'home'
+          name: 'evidencija'
         });
 
         console.log(response.data);
@@ -2707,13 +2718,23 @@ __webpack_require__.r(__webpack_exports__);
     addItem: function addItem() {
       var _this2 = this;
 
+      if (this.datumi.length == 0) {
+        this.input.hasDetails = false;
+      } else {
+        this.input.hasDetails = true;
+      }
+
       if (this.Mjesto == null) {
         this.axios.post('/api/mjesta/store', this.input).then(function (response) {
           if (_this2.datumi.length == 0) {
+            _this2.input.hasDetails = false;
+
             _this2.$router.push({
               name: 'mjesta'
             });
           } else {
+            _this2.input.hasDetails = true;
+
             _this2.addDetails(response.data.last_insert_id);
           }
         })["catch"](function (error) {
@@ -3064,7 +3085,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.Skladiste == null) {
         this.axios.post('/api/skladiste/store', this.input).then(function (response) {
           return _this.$router.push({
-            name: 'home'
+            name: 'skladiste'
           });
         })["catch"](function (error) {
           return console.log(error);
@@ -3157,10 +3178,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Statistika",
   data: function data() {
     return {
+      stanje: {
+        sati: 0,
+        vrij: 0,
+        broj: 0
+      },
       grafovi: {
         prvi: {
           names: [],
@@ -3190,9 +3236,15 @@ __webpack_require__.r(__webpack_exports__);
 
       console.log(_this.grafovi.prvi);
     });
-    this.axios.get("/api/evidencija/statistika").then(function (response) {
-      console.log(response.data);
-      _this.grafovi.drugi = response.data;
+    /*this.axios
+        .get(`/api/evidencija/statistika`)
+        .then(response => {
+            console.log(response.data);
+            this.grafovi.drugi = response.data;
+        });*/
+
+    this.axios.get("/api/evidencija/stanje").then(function (response) {
+      _this.stanje = response.data;
     });
   }
 });
@@ -80658,23 +80710,25 @@ var render = function() {
                   "div",
                   { staticClass: "btn-group", attrs: { role: "group" } },
                   [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-secondary",
-                        attrs: { type: "button", "aria-expanded": "false" },
-                        on: {
-                          click: function($event) {
-                            return _vm.switchDetails(evidencija.id)
-                          }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                        Materijali\n                    "
+                    evidencija.hasDetails == 1
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-secondary",
+                            attrs: { type: "button", "aria-expanded": "false" },
+                            on: {
+                              click: function($event) {
+                                return _vm.switchDetails(evidencija.id)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                        Materijali\n                    "
+                            )
+                          ]
                         )
-                      ]
-                    )
+                      : _vm._e()
                   ]
                 )
               ])
@@ -81286,73 +81340,98 @@ var render = function() {
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-8" }, [
         _c("div", { staticClass: "container-fluid" }, [
-          _c("div", { staticClass: "row", staticStyle: { height: "12em" } }, [
-            _c("div", { staticClass: "col-md-7" }, [
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "btn-group btn-group-lg d-flex align-items-stretch h-100",
-                  attrs: { role: "group", "aria-label": "Basic example" }
-                },
-                [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-secondary",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.$router.push({ name: "evidencija" })
+          _c(
+            "div",
+            {
+              staticClass: "row",
+              staticStyle: { height: "12em", "margin-bottom": "3em" }
+            },
+            [
+              _c("div", { staticClass: "col-md-7" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "btn-group btn-group-lg d-flex align-items-stretch h-100",
+                    attrs: { role: "group", "aria-label": "Basic example" }
+                  },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary ",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.$router.push({ name: "evidencija" })
+                          }
                         }
-                      }
-                    },
-                    [_vm._v("Evidencija Traži")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-secondary",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.$router.push({ name: "evidencijaDodaj" })
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "img-fluid w-100",
+                          attrs: { src: "/Ikone/Search.svg", alt: "icon name" }
+                        }),
+                        _vm._v("Evidencija Traži")
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.$router.push({ name: "evidencijaDodaj" })
+                          }
                         }
-                      }
-                    },
-                    [_vm._v("Evidencija Dodaj")]
-                  )
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-5" }, [
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "btn-group btn-group-lg d-flex align-items-stretch h-100",
-                  attrs: { role: "group", "aria-label": "Basic example" }
-                },
-                [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-secondary",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.$router.push({ name: "statistika" })
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "img-fluid w-100",
+                          attrs: { src: "/Ikone/Add.svg", alt: "icon name" }
+                        }),
+                        _vm._v("Evidencija Dodaj")
+                      ]
+                    )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-5" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "btn-group btn-group-lg d-flex align-items-stretch h-100",
+                    attrs: { role: "group", "aria-label": "Basic example" }
+                  },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.$router.push({ name: "statistika" })
+                          }
                         }
-                      }
-                    },
-                    [_vm._v("Statistika")]
-                  )
-                ]
-              )
-            ])
-          ]),
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "img-fluid w-50",
+                          attrs: { src: "/Ikone/Stats.svg", alt: "icon name" }
+                        }),
+                        _vm._v("Statistika")
+                      ]
+                    )
+                  ]
+                )
+              ])
+            ]
+          ),
           _vm._v(" "),
           _c(
             "div",
@@ -81381,7 +81460,13 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("Skladište Traži")]
+                      [
+                        _c("img", {
+                          staticClass: "img-fluid w-100",
+                          attrs: { src: "/Ikone/Search.svg", alt: "icon name" }
+                        }),
+                        _vm._v("Skladište Traži")
+                      ]
                     ),
                     _vm._v(" "),
                     _c(
@@ -81395,7 +81480,13 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("Skladište Dodaj")]
+                      [
+                        _c("img", {
+                          staticClass: "img-fluid w-100",
+                          attrs: { src: "/Ikone/Add.svg", alt: "icon name" }
+                        }),
+                        _vm._v("Skladište Dodaj")
+                      ]
                     )
                   ]
                 )
@@ -81421,7 +81512,13 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("Mjesta Traži")]
+                      [
+                        _c("img", {
+                          staticClass: "img-fluid w-100",
+                          attrs: { src: "/Ikone/Search.svg", alt: "icon name" }
+                        }),
+                        _vm._v("Mjesta Traži")
+                      ]
                     ),
                     _vm._v(" "),
                     _c(
@@ -81435,7 +81532,13 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("Mjesta Dodaj")]
+                      [
+                        _c("img", {
+                          staticClass: "img-fluid w-100",
+                          attrs: { src: "/Ikone/Add.svg", alt: "icon name" }
+                        }),
+                        _vm._v("Mjesta Dodaj")
+                      ]
                     )
                   ]
                 )
@@ -81533,7 +81636,7 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _c("footer", { staticClass: "page-footer font-small blue" }, [
+    _c("footer", { staticClass: "page-footer font-small blue mt-3" }, [
       _c("div", { staticClass: "footer-copyright text-center py-3" }, [
         _c("p", { staticClass: "text-secondary" }, [
           _vm._v("Ulogirani Korisnik:")
@@ -81767,23 +81870,25 @@ var render = function() {
                   "div",
                   { staticClass: "btn-group", attrs: { role: "group" } },
                   [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-secondary",
-                        attrs: { type: "button", "aria-expanded": "false" },
-                        on: {
-                          click: function($event) {
-                            return _vm.switchDetails(mjesto.id)
-                          }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                        Termini\n                    "
+                    mjesto.hasDetails
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-secondary",
+                            attrs: { type: "button", "aria-expanded": "false" },
+                            on: {
+                              click: function($event) {
+                                return _vm.switchDetails(mjesto.id)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                        Termini\n                    "
+                            )
+                          ]
                         )
-                      ]
-                    ),
+                      : _vm._e(),
                     _vm._v(" "),
                     _c(
                       "button",
@@ -82649,9 +82754,42 @@ var render = function() {
                 }
               },
               [
-                _vm._v(
-                  "\n                    Stanje Poduzeća\n                "
-                )
+                _vm._m(0),
+                _vm._v(" "),
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "card col-md-12" }, [
+                    _c("div", { staticClass: "card-body" }, [
+                      _vm._m(1),
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(_vm.stanje.sati) +
+                          "\n                            "
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card col-md-12" }, [
+                    _c("div", { staticClass: "card-body" }, [
+                      _vm._m(2),
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(_vm.stanje.vrij) +
+                          "\n                            "
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card col-md-12" }, [
+                    _c("div", { staticClass: "card-body" }, [
+                      _vm._m(3),
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(_vm.stanje.broj) +
+                          "\n                            "
+                      )
+                    ])
+                  ])
+                ])
               ]
             ),
             _vm._v(" "),
@@ -82743,11 +82881,41 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _vm._m(0)
+      _vm._m(4)
     ])
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h2", [_c("b", [_vm._v("Stanje Poduzaća")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h5", { staticClass: "card-title" }, [
+      _c("b", [_vm._v("Radni Sati:")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h5", { staticClass: "card-title" }, [
+      _c("b", [_vm._v("Ukupna Vrijednost Materijala:")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h5", { staticClass: "card-title" }, [
+      _c("b", [_vm._v("Broj Evidencija:")])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

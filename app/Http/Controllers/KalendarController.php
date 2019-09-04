@@ -21,7 +21,7 @@ class KalendarController extends Controller
         $start = date('Y-m-01', strtotime($datum));
         $end = date('Y-m-t', strtotime($datum));
         $termini = Kalendar::where('user_id', auth()->user()->id)->where('Datum', '>=', $start)->where('Datum', '<=', $end)->get();
-        $obavijesti = Kalendar::where('user_id', auth()->user()->id)->where('Datum', '<=', $date)->take(2)->get();
+        $obavijesti = Kalendar::where('user_id', auth()->user()->id)->where('Datum', '<', $date)->take(2)->get();
         foreach ($termini as $item){
             array_push($test['termini'], array(
                 "id" => $item['id'],

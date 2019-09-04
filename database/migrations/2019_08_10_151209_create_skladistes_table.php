@@ -23,7 +23,7 @@ class CreateSkladistesTable extends Migration
             $table->float('Cijena')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
-            $table->unique(['Sifra', 'NazivMaterijala', 'Prodavac']);
+            $table->unique(['Sifra', 'NazivMaterijala', 'Prodavac', 'user_id']);
         });
 
         Schema::table('skladistes', function(Blueprint $table) {

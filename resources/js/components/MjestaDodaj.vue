@@ -77,13 +77,20 @@
         },
         methods: {
             addItem() {
+                if (this.datumi.length == 0) {
+                    this.input.hasDetails = false;
+                }else{
+                    this.input.hasDetails = true;
+                }
                 if(this.Mjesto == null) {
                     this.axios
                         .post('/api/mjesta/store', this.input)
                         .then(response => {
                             if (this.datumi.length == 0) {
+                                this.input.hasDetails = false;
                                 this.$router.push({name: 'mjesta'})
                             } else {
+                                this.input.hasDetails = true;
                                 this.addDetails(response.data.last_insert_id);
                             }
                         })

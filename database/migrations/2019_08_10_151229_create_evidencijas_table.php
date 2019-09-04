@@ -21,6 +21,7 @@ class CreateEvidencijasTable extends Migration
             $table->string('OpisPosla');
             $table->integer('UtrosenoVrijeme');
             $table->unsignedBigInteger('user_id');
+            $table->boolean('hasDetails');
             $table->timestamps();
 
         });

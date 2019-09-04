@@ -18,7 +18,7 @@
                 <td>{{ mjesto.Adresa }}</td>
                 <td>
                     <div class="btn-group" role="group">
-                        <button @click="switchDetails(mjesto.id)" class="btn btn-secondary" type="button" aria-expanded="false"  >
+                        <button v-if="mjesto.hasDetails" @click="switchDetails(mjesto.id)" class="btn btn-secondary" type="button" aria-expanded="false"  >
                             Termini
                         </button>
                         <button class="btn btn-primary" @click="editItem(mjesto)">Uredi</button>

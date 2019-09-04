@@ -19,7 +19,8 @@ class CreateMjestasTable extends Migration
             $table->string('Adresa');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
-            $table->unique(['NazivMjesta', 'Adresa']);
+            $table->unique(['NazivMjesta', 'Adresa', 'user_id']);
+            $table->boolean('hasDetails');
         });
 
         Schema::table('mjestas', function(Blueprint $table) {

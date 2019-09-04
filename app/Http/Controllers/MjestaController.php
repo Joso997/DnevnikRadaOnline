@@ -39,6 +39,7 @@ class MjestaController extends Controller
         $record = new Mjesta([
             'NazivMjesta' => $request->input('NazivMjesta'),
             'Adresa' => $request->input('Adresa'),
+            'hasDetails' => $request->input('hasDetails'),
             'user_id' => auth()->user()->id
         ]);
         $record->save();
